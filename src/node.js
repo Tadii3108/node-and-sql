@@ -105,3 +105,12 @@ const deleteAllVisitors = () => {
     );
 };
 deleteAllVisitors();
+
+module.exports = {
+    addNewVisitor,
+    listVisitors,
+    deleteVisitor,
+    updateVisitor,
+    viewVisitor,
+    deleteAllVisitors
+}
