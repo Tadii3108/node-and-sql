@@ -3,10 +3,9 @@
 require("dotenv").config();
 
 const Pool = require("pg").Pool;
-const text;
 
 let pool = new Pool({
-    user: "tadiwa",
+    user: "user",
     host: "localhost",
     database: "db",
     password: "pass",
@@ -17,13 +16,13 @@ pool.connect()
 
 const addNewVisitor = async(visitor_name, visitor_age, date_of_visit, time_of_visit, assistant, comments) => {
     let values, query;
-    text = `INSERT INTO visitors(
-                'name',
-                'age',
-                'date',
-                'time',
-                'name_of_assistant',
-                'comments')
+    const text = `INSERT INTO visitors(
+                visitor_name,
+                visitor_age,
+                date_of_visit,
+                time_of_visit,
+                assistant,
+                comments)
             VALUES($1,$2,$3,$4,$5,$6)
             RETURNING *`
 
@@ -41,14 +40,14 @@ const addNewVisitor = async(visitor_name, visitor_age, date_of_visit, time_of_vi
 }
 
 const listVisitors = async () => {
-    text = `SELECT id, visitor_name FROM visitors`;
+    const text = `SELECT id, visitor_name FROM visitors`;
 
     return await pool.query(text);  
 }
 
 const deleteVisitor = async id => {
     let values = [id];
-    text = `DELETE FROM visitors WHERE $1`;
+    const text = `DELETE FROM visitors WHERE $1`;
 
     return await pool.query(id, text);
 }
@@ -69,7 +68,7 @@ const updateVisitor = (id, visitor_name, visitor_age, date_of_visit, time_of_vis
 }
 
 const viewVisitor = id => {
-    text = `SELECT * FROM visitors WHERE $1`;
+    const text = `SELECT * FROM visitors WHERE $1`;
     let values = [id];
 
     try {
@@ -84,7 +83,7 @@ const viewVisitor = id => {
 }
 
 const deleteAllVisitors = () => {
-    text = `DELETE FROM visitors`;
+    const text = `DELETE FROM visitors`;
 
     try {
         query = await pool.query(text,values)
@@ -97,11 +96,14 @@ const deleteAllVisitors = () => {
     }
 }
 
+//addNewVisitor('Khoza Thulani', 30, '02/09/2019', '15:00', 'Ma', 'Diligent young man');
+listVisitors();
+
 module.exports = {
-    addNewVisitor,
+    //addNewVisitor,
     listVisitors,
-    deleteVisitor,
-    updateVisitor,
-    viewVisitor,
-    deleteAllVisitors
+    //deleteVisitor,
+    //updateVisitor,
+    //viewVisitor,
+    //deleteAllVisitors
 }
