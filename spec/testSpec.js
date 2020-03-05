@@ -8,7 +8,6 @@ describe("node sql", () => {
         assistant: 'Charlie',
         comment: 'Delicious world!'
     }
-    let id = 0;
 
     it("should save data to database", async (done) => {
         let newVisitor = await addNewVisitor(personnel.name, personnel.age, personnel.date, personnel.time, personnel.assistant, personnel.comment)
@@ -18,11 +17,13 @@ describe("node sql", () => {
         expect(newVisitor[0].time_of_visit).toEqual(personnel.time)
         expect(newVisitor[0].assistant).toEqual(personnel.assistant)
         expect(newVisitor[0].comment).toEqual(personnel.comment)
+        done();
     });
 
     it("should list all visitors names with id", async (done) => {
         await listVisitors().then(res => {
             const objPersonnel = res.rows
+            let id = 0
 
             expect(objPersonnel[0].name).toEqual(personnel.name)
             expect(objPersonnel[0].age).toEqual(personnel.age)
